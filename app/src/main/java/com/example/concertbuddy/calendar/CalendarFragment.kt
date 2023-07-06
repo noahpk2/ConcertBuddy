@@ -1,4 +1,4 @@
-package com.example.concertbuddy
+package com.example.concertbuddy.calendar
 
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.concertbuddy.R
 import java.util.Calendar
-import com.google.android.flexbox.*
 
 
 class CalendarFragment : Fragment() {
@@ -19,6 +19,7 @@ class CalendarFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var calendarAdapter: CalendarAdapter? = null
     private var calendarItems: MutableList<CalendarItem> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +50,11 @@ class CalendarFragment : Fragment() {
     }
 
     private fun getCalendarItems(): MutableList<CalendarItem> {
+        """This function returns a list of CalendarItems that will be used to populate the calendar
+            |This includes the month headers and the date objects
+        """
+            .trimMargin()
+
         if (calendarItems.isNotEmpty()) {
             return calendarItems
         }
@@ -72,6 +78,9 @@ class CalendarFragment : Fragment() {
             calendarItems.add(CalendarItem.MonthHeaderItem(monthToString(month), year.toString()))
 
             val daysInMonth = getDaysInMonth(month, year)
+
+            //This code was to align the first day of the month but it actually looks better without it
+
             //val startDayOfWeek = getStartDayOfWeek(month, year)
 
             // Add empty days before the first day of the month
@@ -79,11 +88,13 @@ class CalendarFragment : Fragment() {
             for (j in 1 until startDayOfWeek) {
                 spanCount += 1
             }*/
+
+
             calendarItems.add(CalendarItem.DateItem("", 2, emptyList()))
             // Add calendar cells for each day of the month
             for (day in 1..daysInMonth) {
                 val date = "$year-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}"
-                calendarItems.add(CalendarItem.DateItem(date,1, emptyList()))
+                calendarItems.add(CalendarItem.DateItem(date, 1, emptyList()))
                 Log.d(TAG, "CalendarFragment: getCalendarItems: date: $date")
             }
 
@@ -96,6 +107,7 @@ class CalendarFragment : Fragment() {
 
 
     private fun getDaysInMonth(month:Int, year:Int):Int {
+        """This function returns the number of days in a given month"""
         Log.d(TAG, "CalendarFragment: getDaysInMonth: ")
         val calendar = Calendar.getInstance()
         calendar.set(year, month, 1)
@@ -103,12 +115,14 @@ class CalendarFragment : Fragment() {
     }
 
     private fun getStartDayOfWeek(month: Int, year: Int): Int {
+        """Dont really need this anymore"""
         val calendar = Calendar.getInstance()
         calendar.set(year, month - 1, 1) // Set the calendar to the first day of the month
         return calendar.get(Calendar.DAY_OF_WEEK)
     }
 
     private fun monthToString(month: Int):String{
+        """Converts the month number to a string"""
         return when (month) {
             1 -> "January"
             2 -> "February"

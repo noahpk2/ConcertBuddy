@@ -1,4 +1,4 @@
-package com.example.concertbuddy
+package com.example.concertbuddy.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.concertbuddy.R
+import com.example.concertbuddy.calendar.CalendarFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +24,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         drawerLayout = findViewById(R.id.my_drawer_layout)
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
+            R.string.nav_open,
+            R.string.nav_close
+        )
 
         // pass the Open and Close toggle for the drawer layout listener
         // to toggle the button
