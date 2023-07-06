@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/calendarItemTextView"
-        android:layout_width="wrap_content"
+        android:id="@+id/headerItemTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="18dp"
-        android:background="@color/white"
+        android:background="@color/light_blue"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_margin="2dp"
+        android:textSize="36sp"
         tools:ignore="MissingConstraints" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

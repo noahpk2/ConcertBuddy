@@ -7,11 +7,10 @@
     tools:context=".CalendarFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/month_calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_gray"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="7" />
+        android:background="@color/white"
+        />
 
 </FrameLayout>

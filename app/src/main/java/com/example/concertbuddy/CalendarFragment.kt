@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Calendar
-
+import com.google.android.flexbox.*
 
 
 class CalendarFragment : Fragment() {
@@ -18,50 +18,82 @@ class CalendarFragment : Fragment() {
     }
     private lateinit var recyclerView: RecyclerView
     private var calendarAdapter: CalendarAdapter? = null
-    private lateinit var calendarItems: List<CalendarItem>
+    private var calendarItems: MutableList<CalendarItem> = mutableListOf()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        Log.d(TAG, "CalendarFragment: onCreateView: ")
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_calendar, container, false)
-        recyclerView = view.findViewById(R.id.recyclerView)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Initialize the calendarItems list
         calendarItems = getCalendarItems()
-        calendarAdapter = CalendarAdapter(calendarItems)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
+    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = inflater.inflate(R.layout.fragment_calendar, container, false)
+        recyclerView = rootView.findViewById(R.id.month_calendar)
+        calendarAdapter = CalendarAdapter(getCalendarItems())
+
+        val layoutManager = GridLayoutManager(requireContext(), 7)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (calendarAdapter?.getItemViewType(position) == CalendarAdapter.MONTH_HEADER_VIEW_TYPE) {
+                    7 // Use the full span count for month headers
+                } else {
+                    1 // Use a span count of 1 for date items
+                }
+            }
+        }
+
+        recyclerView.layoutManager = layoutManager
         recyclerView.adapter = calendarAdapter
-        return view
+
+        return rootView
     }
 
-    private fun getCalendarItems(): List<CalendarItem> {
-        Log.d(TAG, "CalendarFragment: getCalendarItems: ")
-        val items = mutableListOf<CalendarItem>()
+    private fun getCalendarItems(): MutableList<CalendarItem> {
+        if (calendarItems.isNotEmpty()) {
+            return calendarItems
+        }
+
         val calendar = Calendar.getInstance()
-        val today = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1
+        val currentYear = calendar.get(Calendar.YEAR)
 
-        /* TODO("add actual events") */
+        /* TODO: Add actual events */
 
-        val month = calendar.get(Calendar.MONTH)
-        val year = calendar.get(Calendar.YEAR)
+        var month = currentMonth
+        var year = currentYear
 
-        val daysInMonth = getDaysInMonth(month, year)
-        val startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        // Repeat this chunk for 12 months
+        for (i in 0 until 12) {
+            if (month > 12) {
+                month = 1
+                year += 1
+            }
 
-        //add empty days before first day of month
-        for (i in 1 until startDayOfWeek) {
-            items.add(CalendarItem("", emptyList()))
+            calendarItems.add(CalendarItem.MonthHeaderItem(monthToString(month), year.toString()))
+
+            val daysInMonth = getDaysInMonth(month, year)
+            //val startDayOfWeek = getStartDayOfWeek(month, year)
+
+            // Add empty days before the first day of the month
+           /* var spanCount : Int = 0
+            for (j in 1 until startDayOfWeek) {
+                spanCount += 1
+            }*/
+            calendarItems.add(CalendarItem.DateItem("", 2, emptyList()))
+            // Add calendar cells for each day of the month
+            for (day in 1..daysInMonth) {
+                val date = "$year-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}"
+                calendarItems.add(CalendarItem.DateItem(date,1, emptyList()))
+                Log.d(TAG, "CalendarFragment: getCalendarItems: date: $date")
+            }
+
+            // Adjust the month and year index
+            month += 1
         }
-        //add calendar cells for each day of month
-        for (day in 1..daysInMonth) {
-            val date = "$year-${month + 1}-$day"
-            items.add(CalendarItem(date, emptyList()))
-        }
-        return items
 
+        return calendarItems
     }
+
 
     private fun getDaysInMonth(month:Int, year:Int):Int {
         Log.d(TAG, "CalendarFragment: getDaysInMonth: ")
@@ -70,5 +102,29 @@ class CalendarFragment : Fragment() {
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
     }
 
+    private fun getStartDayOfWeek(month: Int, year: Int): Int {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month - 1, 1) // Set the calendar to the first day of the month
+        return calendar.get(Calendar.DAY_OF_WEEK)
+    }
+
+    private fun monthToString(month: Int):String{
+        return when (month) {
+            1 -> "January"
+            2 -> "February"
+            3 -> "March"
+            4 -> "April"
+            5 -> "May"
+            6 -> "June"
+            7 -> "July"
+            8 -> "August"
+            9 -> "September"
+            10 -> "October"
+            11 -> "November"
+            12 -> "December"
+            else -> "Error"
+        }
+
+    }
 
 }
