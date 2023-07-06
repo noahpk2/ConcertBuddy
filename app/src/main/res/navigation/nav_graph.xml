@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
 
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.concertbuddy.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/userRegisterFragment"
+        android:name="com.example.concertbuddy.UserRegisterFragment"
+        android:label="fragment_register_user"
+        tools:layout="@layout/fragment_register_user" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.concertbuddy.activities.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/profileActivity"
+        android:name="com.example.concertbuddy.activities.ProfileActivity"
+        android:label="ProfileActivity" />
 </navigation>
