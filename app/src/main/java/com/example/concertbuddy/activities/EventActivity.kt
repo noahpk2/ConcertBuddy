@@ -11,9 +11,9 @@ import com.example.concertbuddy.R
 import com.example.concertbuddy.calendar.CalendarFragment
 
 
-class ProfileActivity : AppCompatActivity() {
+class EventActivity : AppCompatActivity() {
     companion object {
-        private const val TAG = "MainActivity"
+        private const val TAG = "EventActivity"
     }
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
@@ -21,7 +21,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_event)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         drawerLayout = findViewById(R.id.my_drawer_layout)
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,

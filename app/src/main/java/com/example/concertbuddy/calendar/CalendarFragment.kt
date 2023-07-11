@@ -48,6 +48,27 @@ class CalendarFragment : Fragment() {
 
         return rootView
     }
+    // function to add events to the calendar
+    fun addEvent(event: Event) {
+        val eventDate = event.date
+        val eventMonth = eventDate.split("/")[0]
+        val eventYear = eventDate.split("/")[2]
+        val eventDay = eventDate.split("/")[1]
+
+
+        //find corresponding date item in calendarItems, add event to it
+        for (i in 0 until calendarItems.size) {
+            if (calendarItems[i] is CalendarItem.DateItem) {
+                val dateItem = calendarItems[i] as CalendarItem.DateItem
+                if (dateItem.day == eventDay && dateItem.month == eventMonth && dateItem.year == eventYear) {
+                    dateItem.events = dateItem.events.plusElement(event)
+                    calendarAdapter?.notifyItemChanged(i)
+                }
+            }
+        }
+    }
+
+
 
     private fun getCalendarItems(): MutableList<CalendarItem> {
         """This function returns a list of CalendarItems that will be used to populate the calendar

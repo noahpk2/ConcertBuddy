@@ -2,7 +2,7 @@ package com.example.concertbuddy.calendar
 
 
 sealed class CalendarItem {
-    data class DateItem(val date: String, val span: Int , val events: List<Event>) : CalendarItem(){
+    data class DateItem(val date: String, val span: Int, var events: List<Event>) : CalendarItem(){
         var month: String = ""
         var day: String = ""
         var year: String = ""

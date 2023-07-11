@@ -5,14 +5,19 @@
 
         <item
             android:id="@+id/nav_account"
-            android:title="Profile" />
+            android:title="Profile"
+
+            />
         <item
             android:id="@+id/nav_events"
-            android:title="Events" />
+            android:title="Events"
+
+            />
 
         <item
             android:id="@+id/nav_Groups"
             android:title="Groups" />
+
 
         <item
             android:id="@+id/nav_logout"

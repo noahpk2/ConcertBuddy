@@ -18,6 +18,14 @@
     <string name="choose_a_username">Choose a username!</string>
     <string name="username_already_taken">Username already taken :(</string>
     <string name="register">register</string>
+    <string name="pm">PM</string>
+    <string name="am">AM</string>
+    <string name="event_time">Event Time:</string>
+    <string name="event_name">Event Name</string>
+    <string name="create_event">Create Event</string>
+    <string name="event_description">Event Description</string>
+    <string name="create_event_button">Create Event</string>
+    <string name="event_location">Event Location</string>
 
 
 </resources>
