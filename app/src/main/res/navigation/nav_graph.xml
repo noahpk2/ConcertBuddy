@@ -1,19 +1,42 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/calendarFragment">
+    app:startDestination="@id/calendarFragment"
+    android:id="@+id/nav_graph">
 
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.concertbuddy.activities.MainActivity"
+        android:label="MainActivity"/>
+
+
+    <activity
+        android:id="@+id/profileActivity"
+        android:name="com.example.concertbuddy.activities.ProfileActivity"
+        android:label="ProfileActivity" />
+
+    <activity
+        android:id="@+id/eventActivity"
+        android:name="com.example.concertbuddy.activities.EventActivity"
+        android:label="EventActivity" />
+
+    <fragment
+        android:id="@+id/profileViewFragment"
+        android:name="com.example.concertbuddy.profile.ProfileViewFragment"
+        android:label="ProfileViewFragment" />
+    <fragment
+        android:id="@+id/createEventFragment"
+        android:name="com.example.concertbuddy.events.CreateEventFragment"
+        android:label="EventViewFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.concertbuddy.profile.LoginFragment"
+        android:label="LoginFragment" />
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.concertbuddy.calendar.CalendarFragment"
-        android:label="calendar_fragment"
-        tools:layout="@layout/fragment_calendar" >
-        <!-- Add any actions to navigate to/from this fragment here -->
-    </fragment>
+        android:label="RegisterFragment" />
 
-
-    <!-- More fragments and actions -->
 
 </navigation>
 

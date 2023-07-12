@@ -1,5 +1,7 @@
 package com.example.concertbuddy.calendar
 
+import com.example.concertbuddy.events.Event
+
 
 sealed class CalendarItem {
     data class DateItem(val date: String, val span: Int, var events: List<Event>) : CalendarItem(){

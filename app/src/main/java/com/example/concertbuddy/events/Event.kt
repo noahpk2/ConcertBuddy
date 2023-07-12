@@ -1,6 +1,4 @@
-package com.example.concertbuddy.calendar
-
-import android.widget.DatePicker
+package com.example.concertbuddy.events
 
 data class Event(
     val title: String, val time: String, val location: String, val description: String,

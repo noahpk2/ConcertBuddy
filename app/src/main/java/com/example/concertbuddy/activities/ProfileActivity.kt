@@ -3,54 +3,83 @@ package com.example.concertbuddy.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.concertbuddy.R
-import com.example.concertbuddy.calendar.CalendarFragment
+import com.google.android.material.navigation.NavigationView
 
 
 class ProfileActivity : AppCompatActivity() {
     companion object {
-        private const val TAG = "MainActivity"
+        private const val TAG = "ProfileActivity"
     }
+
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_profile)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
         drawerLayout = findViewById(R.id.my_drawer_layout)
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
-            R.string.nav_open,
-            R.string.nav_close
-        )
+        val navView: NavigationView =
+            findViewById(R.id.navView) // Replace with the id of your NavigationView
 
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
-        //setSupportActionBar(toolbar)
-        // to make the Navigation drawer icon always appear on the action bar
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // Set item selected listener
+        navView.setNavigationItemSelectedListener { menuItem ->
+            Log.d(TAG, "Menu Item Selected: ${menuItem.itemId}")
+            when (menuItem.itemId) {
+                R.id.nav_logout -> {
+                    Log.d(TAG, "Logout selected")
+                    // TODO(Perform logout operation here)
+                    true
+                }
 
-        val fragment = CalendarFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
-        Log.d(TAG, "onCreate: ")
+                else -> {
+                    // This will allow the other menu item selections to navigate properly
+                    NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    drawerLayout.closeDrawers() // Close navigation drawer
+                    true
+                }
+            }
+        }
 
-        //
+        // decide where to navigate based on login status
+        val isLoggedIn = checkUserLoginStatus()
+        if (isLoggedIn) {
+            // Navigate to profile view
+            navController.navigate(R.id.profileViewFragment)
+        } else {
+            // Navigate to login screen
+
+            navController.navigate(R.id.loginFragment)
+        }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    private fun checkUserLoginStatus(): Boolean {
+        // Check if user is logged in
+        return false
+    }
 
-        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            Log.d(TAG, "onOptionsItemSelected: Toggle Selected")
-            true
-        } else super.onOptionsItemSelected(item)
+    override fun onSupportNavigateUp(): Boolean {
+        // Allow NavigationUI to support proper up navigation or the drawer layout
+        // drawer menu, depending on the situation
+        return navController.navigateUp(AppBarConfiguration(navController.graph, drawerLayout))
+                || super.onSupportNavigateUp()
     }
 }

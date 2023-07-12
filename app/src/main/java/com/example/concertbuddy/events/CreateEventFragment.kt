@@ -1,4 +1,4 @@
-package com.example.concertbuddy
+package com.example.concertbuddy.events
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.EditText
-import android.widget.RadioButton
 import android.widget.RadioGroup
-import com.example.concertbuddy.calendar.Event
-
+import com.example.concertbuddy.R
 
 
 class CreateEventFragment : Fragment() {

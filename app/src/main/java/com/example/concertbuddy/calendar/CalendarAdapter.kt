@@ -53,14 +53,14 @@ class CalendarAdapter(emptyList: List<Any>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        Log.d(TAG, "getItemViewType: at position: $position")
+        //Log.d(TAG, "getItemViewType: at position: $position")
         val item = items[position]
         return if (item is CalendarItem.MonthHeaderItem){
-            Log.d(TAG, "getItemViewType: MONTH_HEADER_VIEW_TYPE")
+            //Log.d(TAG, "getItemViewType: MONTH_HEADER_VIEW_TYPE")
             MONTH_HEADER_VIEW_TYPE
 
         } else {
-            Log.d(TAG, "getItemViewType: DATE_VIEW_TYPE")
+            //Log.d(TAG, "getItemViewType: DATE_VIEW_TYPE")
             DATE_VIEW_TYPE
 
         }
@@ -75,9 +75,8 @@ class CalendarAdapter(emptyList: List<Any>) :
 
 
     override fun getItemCount(): Int {
-        val count = items.size
-        Log.d(TAG, "getItemCount: $count")
-        return count
+        //Log.d(TAG, "getItemCount: $count")
+        return items.size
     }
 
     /*inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

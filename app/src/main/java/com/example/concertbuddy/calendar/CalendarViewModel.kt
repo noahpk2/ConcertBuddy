@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.concertbuddy.events.Event
 
 class CalendarViewModel (private val repository: CalendarRepository) : ViewModel() {
     private val _calendarItems: MutableLiveData<MutableList<CalendarItem>> = MutableLiveData(mutableListOf())

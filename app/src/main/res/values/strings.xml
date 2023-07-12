@@ -26,6 +26,11 @@
     <string name="event_description">Event Description</string>
     <string name="create_event_button">Create Event</string>
     <string name="event_location">Event Location</string>
+    <string name="location_city_state">Location(City,State):</string>
+    <string name="passwords_don_t_match">Passwords don\'t match!</string>
+    <string name="user_name">Name: (not displayed to other users by default)</string>
+    <string name="enter_a_password">Enter a password:</string>
+    <string name="confirm_password">Confirm password:</string>
 
 
 </resources>

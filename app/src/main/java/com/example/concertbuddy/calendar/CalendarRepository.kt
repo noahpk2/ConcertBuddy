@@ -1,6 +1,7 @@
 package com.example.concertbuddy.calendar
 
 import android.util.Log
+import com.example.concertbuddy.events.Event
 import java.util.Calendar
 
 /* This class is responsible for fetching and saving data to the database

@@ -6,15 +6,19 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import com.example.concertbuddy.R
 import com.example.concertbuddy.calendar.CalendarFragment
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -36,6 +40,27 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         drawerLayout = findViewById(R.id.my_drawer_layout)
+        val navView: NavigationView = findViewById(R.id.navView) // Replace with the id of your NavigationView
+
+        // Set item selected listener
+        navView.setNavigationItemSelectedListener { menuItem ->
+            Log.d(TAG, "Menu Item Selected: ${menuItem.itemId}")
+            when (menuItem.itemId) {
+                R.id.nav_logout -> {
+                    Log.d(TAG, "Logout selected")
+                    // TODO(Perform logout operation here)
+                    true
+                }
+                else -> {
+                    // This will allow the other menu item selections to navigate properly
+                    NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    drawerLayout.closeDrawers() // Close navigation drawer
+
+                    true
+                }
+            }
+        }
+
         actionBarDrawerToggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -50,17 +75,9 @@ class MainActivity : AppCompatActivity() {
 
         // To make the Navigation drawer icon always appear on the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        Log.d(TAG, "onCreate: ")
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Pass the action to NavigationUI, it will check if the item id
-        // is a navigation destination from your graph
-        return item.onNavDestinationSelected(navController)
-                || super.onOptionsItemSelected(item)
-    }
-
+    // This should allow the back button to work properly (but it still doesn't work)
     override fun onSupportNavigateUp(): Boolean {
         // Allow NavigationUI to support proper up navigation or the drawer layout
         // drawer menu, depending on the situation

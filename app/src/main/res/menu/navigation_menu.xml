@@ -4,20 +4,15 @@
         tools:ignore="HardcodedText">
 
         <item
-            android:id="@+id/nav_account"
+            android:id="@+id/profileActivity"
             android:title="Profile"
 
             />
         <item
-            android:id="@+id/nav_events"
+            android:id="@+id/eventActivity"
             android:title="Events"
 
             />
-
-        <item
-            android:id="@+id/nav_Groups"
-            android:title="Groups" />
-
 
         <item
             android:id="@+id/nav_logout"
