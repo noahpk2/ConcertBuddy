@@ -1,15 +1,14 @@
 package com.example.concertbuddy.calendar
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.concertbuddy.R
-import java.util.Calendar
 
 
 class CalendarFragment : Fragment() {
@@ -18,19 +17,29 @@ class CalendarFragment : Fragment() {
     }
     private lateinit var recyclerView: RecyclerView
     private var calendarAdapter: CalendarAdapter? = null
-    private var calendarItems: MutableList<CalendarItem> = mutableListOf()
-
+    private val viewModel: CalendarViewModel by viewModels{
+        CalendarViewModelFactory(repository = CalendarRepository())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Initialize the calendarItems list
-        calendarItems = getCalendarItems()
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_calendar, container, false)
         recyclerView = rootView.findViewById(R.id.month_calendar)
-        calendarAdapter = CalendarAdapter(getCalendarItems())
+
+        // Initialize your adapter
+        calendarAdapter = CalendarAdapter(emptyList())
+
+        viewModel.calendarItems.observe(viewLifecycleOwner) { calendarItems ->
+            // Update the adapter when calendarItems change
+            calendarItems?.let {
+                calendarAdapter?.updateItems(it)
+            } ?: run {
+                calendarAdapter?.updateItems(emptyList())
+            }
+        }
 
         val layoutManager = GridLayoutManager(requireContext(), 7)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -48,8 +57,9 @@ class CalendarFragment : Fragment() {
 
         return rootView
     }
+}
     // function to add events to the calendar
-    fun addEvent(event: Event) {
+    /*fun addEvent(event: Event) {
         val eventDate = event.date
         val eventMonth = eventDate.split("/")[0]
         val eventYear = eventDate.split("/")[2]
@@ -66,11 +76,11 @@ class CalendarFragment : Fragment() {
                 }
             }
         }
-    }
+    }*/
 
 
 
-    private fun getCalendarItems(): MutableList<CalendarItem> {
+    /*private fun getCalendarItems(): MutableList<CalendarItem> {
         """This function returns a list of CalendarItems that will be used to populate the calendar
             |This includes the month headers and the date objects
         """
@@ -84,7 +94,7 @@ class CalendarFragment : Fragment() {
         val currentMonth = calendar.get(Calendar.MONTH) + 1
         val currentYear = calendar.get(Calendar.YEAR)
 
-        /* TODO: Add actual events */
+        *//* TODO: Add actual events *//*
 
         var month = currentMonth
         var year = currentYear
@@ -105,10 +115,10 @@ class CalendarFragment : Fragment() {
             //val startDayOfWeek = getStartDayOfWeek(month, year)
 
             // Add empty days before the first day of the month
-           /* var spanCount : Int = 0
+           *//* var spanCount : Int = 0
             for (j in 1 until startDayOfWeek) {
                 spanCount += 1
-            }*/
+            }*//*
 
 
             calendarItems.add(CalendarItem.DateItem("", 2, emptyList()))
@@ -124,10 +134,10 @@ class CalendarFragment : Fragment() {
         }
 
         return calendarItems
-    }
+    }*/
 
 
-    private fun getDaysInMonth(month:Int, year:Int):Int {
+    /*private fun getDaysInMonth(month:Int, year:Int):Int {
         """This function returns the number of days in a given month"""
         Log.d(TAG, "CalendarFragment: getDaysInMonth: ")
         val calendar = Calendar.getInstance()
@@ -160,6 +170,5 @@ class CalendarFragment : Fragment() {
             else -> "Error"
         }
 
-    }
+    }*/
 
-}

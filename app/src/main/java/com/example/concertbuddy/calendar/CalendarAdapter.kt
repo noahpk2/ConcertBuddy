@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.concertbuddy.R
 
 
-class CalendarAdapter(private val items: List<CalendarItem>) :
+class CalendarAdapter(emptyList: List<Any>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
+    private var items: MutableList<CalendarItem> = mutableListOf()
     companion object {
         private const val TAG = "CalendarAdapter"
         const val DATE_VIEW_TYPE = 1
@@ -63,6 +64,13 @@ class CalendarAdapter(private val items: List<CalendarItem>) :
             DATE_VIEW_TYPE
 
         }
+    }
+
+    fun updateItems(newItems: List<CalendarItem>) {
+        Log.d(TAG, "updateItems: ")
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
     }
 
 

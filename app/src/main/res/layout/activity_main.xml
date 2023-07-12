@@ -8,6 +8,7 @@
     android:visibility="visible"
     tools:context=".activities.MainActivity"
     tools:ignore="HardcodedText">
+
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -37,11 +38,12 @@
             android:layout_height="wrap_content">
         </androidx.appcompat.widget.Toolbar>
 
-        <FrameLayout
+        <!--<FrameLayout
             android:id="@+id/fragmentContainerFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="vertical" />-->
+
     </LinearLayout>
 
 

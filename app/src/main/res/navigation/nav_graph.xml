@@ -7,18 +7,11 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.concertbuddy.calendar.CalendarFragment"
-        android:label="CalendarFragment" >
-        <argument
-            android:name="argumentKey"
-            app:argType="string" />
-        <!-- Add more arguments if required for this fragment -->
-
-        <!-- Define the actions for this fragment here, like this example:
-        <action
-            android:id="@+id/action_calendarFragment_to_someOtherFragment"
-            app:destination="@id/someOtherFragment" />
-        -->
+        android:label="calendar_fragment"
+        tools:layout="@layout/fragment_calendar" >
+        <!-- Add any actions to navigate to/from this fragment here -->
     </fragment>
+
 
     <!-- More fragments and actions -->
 
