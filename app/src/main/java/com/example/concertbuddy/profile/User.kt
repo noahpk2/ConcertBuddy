@@ -1,6 +1,7 @@
 package com.example.concertbuddy.profile
 
 import com.example.concertbuddy.events.Event
+import java.io.InputStream
 
 data class User(val id : Int,
                 val username : String,
@@ -23,4 +24,5 @@ data class User(val id : Int,
     //TODO(Add friends list)
     //TODO(Add location)
     //TODO(Add interests as a class/tag)
+
 }
