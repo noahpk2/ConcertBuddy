@@ -25,32 +25,39 @@
     <li>Settings page that allows users to change their settings(not implemented yet)</li>
     <li>Sign in page that allows users to sign in to their account</li>
     <li>Sign up page that allows users to create a new account</li>
+    <li>Group creation page that allows users to create different groups of friends(not implemented yet)</li>
+    <li>Group view page that displays information about the group and allows users to add/remove friends from the group(not implemented yet)</li>
+    <li>Group chat(not implemented yet)</li>
+    <li>Event chat(not implemented yet)</li>
+    <li>Friend chat(not implemented yet)</li>
+
 </ul>
 
 <h2>Backend Components</h2>
 <ul>
-    <li>Custom stateless server written in Rust using the tokio web framework(hosted locally for now, but designed to be easily cloud hosted and scaled - runs in a docker container)</li>
-    <li>Server handles user authentication,user logins, event creation, storage, and retrieval, user and event search, and web scraping(partially implemented)</li>
+    <li>Custom stateless server(s) written in Rust using the tokio web framework(hosted locally for now, but designed to be easily cloud hosted and scaled - runs in a docker container)</li>
+    <li>Server handles user authentication,user logins, event creation, storage, and retrieval, user and event search,web scraping and chat(partially implemented)</li>
     <li>Server uses MongoDB to store user and event information</li>
     <li>Server uses Neo4j to store user friendships and groups(this will allow for things like friend suggestions,and social network mapping)</li>
 </ul>
 
 <h2>How to run</h2>
 <p> You can currently run the app (locally) via emulator or on an android device through Android Studio, albeit with limited functionality. If you want to connect to our server, youll need to request a private key to connect(not implemented yet). If you want to run your own server, 
-youll need to download rust, docker, and images of mongoDB and neo4j and then run the server found in this github repo:(not implemented yet)</p>
+youll need to download rust, docker, and images of mongoDB and neo4j and then run the server found in this github repo:(not implemented yet) In the future, you should be able to just get the app via app store or access it on the web,
+create a profile and get started!</p>
 
 
 
 <h2>Current Status</h2>
 <ul>
-    <li>Frontend: 70% complete</li>
-    <li>Backend: 50% complete</li>
+    <li>Frontend: ~50% complete</li>
+    <li>Backend: ~50% complete</li>
 </ul>
 
 
 <h2>Future Plans</h2>
 <ul>
     <li>Since we're not far off from something that could actually be useful and fun for us and a lot of our friends, we'd like to actually publish this app. </li>
-    <li>Given that many of us have iPhones, we're looking into porting the app to IOS if it's not too glitchy. The other option is a full rebuild.</li>
+    <li>Given that many of us have iPhones, we're looking into porting the app to IOS if it's not too glitchy. The other option is a full rebuild in swift(which would kinda suck).</li>
     <li>It should also be relatively simple to convert this into a web application so people can access it via desktop (or mobile site)</li>
 </ul>
