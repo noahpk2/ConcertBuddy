@@ -19,6 +19,11 @@ import com.example.concertbuddy.ui.login.LoggedInUserView
 import com.example.concertbuddy.ui.login.LoginViewModel
 import com.example.concertbuddy.ui.login.LoginViewModelFactory
 
+/**
+ * Fragment for the login screen. This fragment is responsible for displaying the login form and interacting with the login view model.
+ *
+ */
+
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel

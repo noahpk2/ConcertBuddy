@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.concertbuddy.events.Event
 import java.util.Calendar
 
-/* This class is responsible for fetching and saving data to the database
+/** This class is responsible for fetching and saving calendar data to the database
         |It is the "single source of truth" for the calendar */
 
 class CalendarRepository {
@@ -70,7 +70,10 @@ class CalendarRepository {
     }
 
     private fun getDaysInMonth(month:Int, year:Int):Int {
-        """This function returns the number of days in a given month"""
+        /**
+         * This function returns the number of days in a given month
+         */
+
         Log.d(TAG, "CalendarRepository: getDaysInMonth: month: $month, year: $year")
         val calendar = Calendar.getInstance()
         calendar.set(year, month, 1)
@@ -79,7 +82,9 @@ class CalendarRepository {
 
 
     private fun monthToString(month: Int):String{
-        """Converts the month number to a string"""
+        /**
+         * This function returns the name of a month given the month number
+         */
         return when (month) {
             1 -> "January"
             2 -> "February"
@@ -99,6 +104,9 @@ class CalendarRepository {
     }
 
     fun addEvent(event: Event) {
+        /**
+         * This function adds an event to the calendarItems list
+         */
         events.add(event)
         for (i in 0 until calendarItems.size) {
             if (calendarItems[i] is CalendarItem.DateItem) {
@@ -113,7 +121,7 @@ class CalendarRepository {
     }
 
     fun saveEvent(event: Event) {
-        // TODO: Save an event to the database
+        // TODO: Save an event to the database. Both local and remote.
 
     }
 }

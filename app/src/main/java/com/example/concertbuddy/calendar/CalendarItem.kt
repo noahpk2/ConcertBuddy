@@ -4,7 +4,14 @@ import com.example.concertbuddy.events.Event
 
 
 sealed class CalendarItem {
+    /**
+     * This class represents the types of items that can be displayed in the calendar recyclerview.
+     * for now, just 2 types:
+     * 1. DateItem
+     * 2. MonthHeaderItem
+     */
     data class DateItem(val date: String, val span: Int, var events: List<Event>) : CalendarItem(){
+        //TODO: Add events to date item, and an icon to show that there are events on that day.
         var month: String = ""
         var day: String = ""
         var year: String = ""

@@ -10,7 +10,10 @@ import android.widget.EditText
 import android.widget.RadioGroup
 import com.example.concertbuddy.R
 
-
+/**
+ * Fragment for creating an event. This fragment is responsible for displaying the create event form and interacting with the create event view model.
+ *
+ */
 class CreateEventFragment : Fragment() {
     companion object {
         private const val TAG = "CreateEventFragment"
@@ -47,6 +50,10 @@ class CreateEventFragment : Fragment() {
 
         val createEventButton = view.findViewById<View>(R.id.create_event_button)
 
+        /**
+         * Listener for the create event button. This listener is responsible for retrieving the values from the EditText fields and creating an event object.
+         *
+         */
         createEventButton.setOnClickListener {
             // Retrieve the values from the EditText fields
             var eventTitle = view.findViewById<EditText>(R.id.event_name_edit_text).toString()

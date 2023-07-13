@@ -9,6 +9,10 @@ import com.example.concertbuddy.data.Result
 
 import com.example.concertbuddy.R
 
+/**
+ * ViewModel for the login screen.
+ */
+
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()

@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.concertbuddy.R
 
-
+/**
+ * Fragment for editing a user's profile. This fragment is responsible for displaying the edit profile form and interacting with the edit profile view model.
+ * TODO: Implement this fragment and its view model.
+ */
 class ProfileEditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

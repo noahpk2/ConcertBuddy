@@ -8,7 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.concertbuddy.R
 
-
+/**
+ * Adapter for the calendar recycler view. This adapter is responsible for displaying the calendar items in the recycler view.
+ *
+ */
 class CalendarAdapter(emptyList: List<Any>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -20,6 +23,12 @@ class CalendarAdapter(emptyList: List<Any>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        /**
+         * Create a new view holder depending on the view type. The view type is determined by the getItemViewType method.
+         * in the list of calendar items, we have 2 types:
+         * 1. DateItem - this is a date item that represents a date in the calendar
+         * 2. MonthHeaderItem - this is a month header that covers the entire span of the recycler view
+         */
         return when (viewType) {
             DATE_VIEW_TYPE -> {
                 val view = LayoutInflater.from(parent.context)
@@ -36,6 +45,11 @@ class CalendarAdapter(emptyList: List<Any>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        /**
+         * Bind the view holder depending on the view type. The view type is determined by the getItemViewType method.
+         *
+         */
+
         val item = items[position]
 
         when (holder) {
@@ -53,6 +67,10 @@ class CalendarAdapter(emptyList: List<Any>) :
     }
 
     override fun getItemViewType(position: Int): Int {
+        /**
+         * Get the view type of the item at the given position. The view type is determined by the type of the item.
+         *
+         */
         //Log.d(TAG, "getItemViewType: at position: $position")
         val item = items[position]
         return if (item is CalendarItem.MonthHeaderItem){
@@ -67,6 +85,10 @@ class CalendarAdapter(emptyList: List<Any>) :
     }
 
     fun updateItems(newItems: List<CalendarItem>) {
+        /**
+         * Update the items in the recycler view with the new items.
+         * This happens when the user scrolls the calendar and the new items are loaded.
+         */
         Log.d(TAG, "updateItems: ")
         items.clear()
         items.addAll(newItems)
@@ -75,6 +97,10 @@ class CalendarAdapter(emptyList: List<Any>) :
 
 
     override fun getItemCount(): Int {
+        /**
+         * Get the number of items in the recycler view.
+         *
+         */
         //Log.d(TAG, "getItemCount: $count")
         return items.size
     }
@@ -84,10 +110,18 @@ class CalendarAdapter(emptyList: List<Any>) :
     }*/
 
     inner class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        /**
+         * View holder for the date item.
+         *
+         */
         val textView: TextView = itemView.findViewById(R.id.calendarItemTextView)
     }
 
     inner class MonthHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        /**
+         * View holder for the month header item.
+         *
+         */
         val textView: TextView = itemView.findViewById(R.id.headerItemTextView)
     }
 }

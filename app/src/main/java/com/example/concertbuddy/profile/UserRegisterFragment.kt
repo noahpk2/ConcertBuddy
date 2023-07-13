@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.concertbuddy.R
 
-
+/**
+ * Fragment for registering a user. This fragment is responsible for displaying the register form and interacting with the register view model.
+ * TODO: Implement this fragment and its view model.
+ */
 class UserRegisterFragment : Fragment() {
 
 

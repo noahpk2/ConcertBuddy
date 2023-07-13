@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.concertbuddy.events.Event
-
+/**
+ * This is the ViewModel for the calendar. it provides an interface between the UI and the data layer.
+ */
 class CalendarViewModel (private val repository: CalendarRepository) : ViewModel() {
     private val _calendarItems: MutableLiveData<MutableList<CalendarItem>> = MutableLiveData(mutableListOf())
     val calendarItems: LiveData<MutableList<CalendarItem>> = _calendarItems
@@ -23,6 +25,10 @@ class CalendarViewModel (private val repository: CalendarRepository) : ViewModel
 }
 
 class CalendarViewModelFactory(private val repository: CalendarRepository) : ViewModelProvider.Factory {
+    /**
+     * This class is responsible for creating the CalendarViewModel, because the default ViewModel constructor
+     * does not allow us to pass in any parameters.
+     */
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CalendarViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

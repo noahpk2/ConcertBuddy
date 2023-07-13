@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.concertbuddy.R
 
-
+/**
+ * Fragment for the calendar. This fragment is responsible for displaying the calendar and interacting with the calendar view model.
+ *
+ */
 class CalendarFragment : Fragment() {
     companion object {
         private const val TAG = "CalendarFragment"
@@ -29,9 +32,10 @@ class CalendarFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_calendar, container, false)
         recyclerView = rootView.findViewById(R.id.month_calendar)
 
-        // Initialize your adapter
+        // Initialize adapter
         calendarAdapter = CalendarAdapter(emptyList())
 
+        // Observe calendarItems in the view model
         viewModel.calendarItems.observe(viewLifecycleOwner) { calendarItems ->
             // Update the adapter when calendarItems change
             calendarItems?.let {
@@ -40,7 +44,7 @@ class CalendarFragment : Fragment() {
                 calendarAdapter?.updateItems(emptyList())
             }
         }
-
+        // this ensures that month headers span the entire width of the recycler view and date items span 1 column
         val layoutManager = GridLayoutManager(requireContext(), 7)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -58,7 +62,12 @@ class CalendarFragment : Fragment() {
         return rootView
     }
 }
-    // function to add events to the calendar
+
+
+/**
+ * all of the following logic has been moved to the data layer
+ */
+// function to add events to the calendar
     /*fun addEvent(event: Event) {
         val eventDate = event.date
         val eventMonth = eventDate.split("/")[0]
