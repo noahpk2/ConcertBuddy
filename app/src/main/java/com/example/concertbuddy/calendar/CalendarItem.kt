@@ -11,7 +11,7 @@ sealed class CalendarItem {
      * 2. MonthHeaderItem
      */
     data class DateItem(val date: String, val span: Int, var events: List<Event>) : CalendarItem(){
-        //TODO: Add events to date item, and an icon to show that there are events on that day.
+        //TODO: Add events to date item
         var month: String = ""
         var day: String = ""
         var year: String = ""

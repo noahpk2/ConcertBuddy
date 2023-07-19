@@ -24,10 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.ProfileActivity"
-            android:exported="true" />
-        <activity android:name=".activities.EventActivity"
-            android:exported="true" />
 
     </application>
 

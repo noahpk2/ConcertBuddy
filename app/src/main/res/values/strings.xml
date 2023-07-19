@@ -31,6 +31,7 @@
     <string name="user_name">Name: (not displayed to other users by default)</string>
     <string name="enter_a_password">Enter a password:</string>
     <string name="confirm_password">Confirm password:</string>
+    <string name="event_indicator_icon">Event Indicator Icon</string>
 
 
 </resources>

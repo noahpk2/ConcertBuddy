@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.concertbuddy.R
@@ -57,11 +58,17 @@ class CalendarAdapter(emptyList: List<Any>) :
                 val dateViewHolder = holder as DateViewHolder
                 val dateItem = item as CalendarItem.DateItem
                 dateViewHolder.textView.text = item.day.trimStart('0')
+                if (dateItem.events.isNotEmpty()){
+                    dateViewHolder.iconView.visibility = View.VISIBLE
+                } else {
+                    dateViewHolder.iconView.visibility = View.INVISIBLE
+                }
             }
             is MonthHeaderViewHolder -> {
                 val monthHeaderViewHolder = holder as MonthHeaderViewHolder
                 val monthHeaderItem = item as CalendarItem.MonthHeaderItem
-                monthHeaderViewHolder.textView.text = "${monthHeaderItem.month} ${monthHeaderItem.year}"
+                val headerText = "${monthHeaderItem.month} ${monthHeaderItem.year}"
+                monthHeaderViewHolder.textView.text = headerText
             }
         }
     }
@@ -115,6 +122,7 @@ class CalendarAdapter(emptyList: List<Any>) :
          *
          */
         val textView: TextView = itemView.findViewById(R.id.calendarItemTextView)
+        val iconView: ImageView = itemView.findViewById(R.id.calendarItemImageView)
     }
 
     inner class MonthHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

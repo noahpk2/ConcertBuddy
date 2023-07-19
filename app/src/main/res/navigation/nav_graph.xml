@@ -9,17 +9,6 @@
         android:name="com.example.concertbuddy.activities.MainActivity"
         android:label="MainActivity"/>
 
-
-    <activity
-        android:id="@+id/profileActivity"
-        android:name="com.example.concertbuddy.activities.ProfileActivity"
-        android:label="ProfileActivity" />
-
-    <activity
-        android:id="@+id/eventActivity"
-        android:name="com.example.concertbuddy.activities.EventActivity"
-        android:label="EventActivity" />
-
     <fragment
         android:id="@+id/profileViewFragment"
         android:name="com.example.concertbuddy.profile.ProfileViewFragment"

@@ -4,29 +4,46 @@ import com.example.concertbuddy.events.Event
 import java.io.InputStream
 
 /**
- * Class that represents a user. This class is responsible for storing the user's information. Will interact with Jetpack Rooms to store the user's information locally.
+ * Class that represents users. This class is responsible for storing the user's information, and some information of their friends. Will interact with Jetpack Rooms to store the information locally.
  * TODO: Finish implementing this class.
  */
-data class User(val id : Int,
-                val username : String,
-                val email: String,
-                val firstName: String,
-                val lastName : String,
-                val attendingEvents : List<Event>,
-                val hostedEvents : List<Event>,
-                val interestedEvents: List<Event>,
-                val location: String,
-                val friends: List<User>,
-                val interests: List<String>,) {
-    init
-    {
-        //init with empty
-        val isLoggedIn = false
+
+sealed class Users {
+    data class User(
+        val user_id: Int,
+        val username: String,
+        val email: String,
+        val firstName: String,
+        val lastName: String,
+        val attendingEvents: List<Event>,
+        val hostedEvents: List<Event>,
+        val interestedEvents: List<Event>,
+        val location: String,
+        val friends: List<Friend>,
+        val interests: List<String>,
+    ) {
+        init {
+            //init with empty
+            val isLoggedIn = false
+        }
+        //TODO(Add profile picture)
+        //TODO(implement password hashing on server)
+        //TODO(Add interests as a class/tag)
+
     }
-    //TODO(Add profile picture)
-    //TODO(implement password hashing on server)
-    //TODO(Add friends list)
-    //TODO(Add location)
-    //TODO(Add interests as a class/tag)
+
+    data class Friend(
+        val user_id: Int,
+        val username: String,
+        val firstName: String,
+        val lastName: String,
+        val attendingEvents: List<Event>,
+        val hostedEvents: List<Event>,
+        val interestedEvents: List<Event>,
+        val location: String,
+        val friends: List<Friend>,
+        val interests: List<String>,
+        ) {
+    }
 
 }
