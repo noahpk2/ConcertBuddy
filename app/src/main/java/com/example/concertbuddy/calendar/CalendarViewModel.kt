@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.concertbuddy.events.Event
+import com.example.concertbuddy.events.calendarData
+
 /**
  * This is the ViewModel for the calendar. it provides an interface between the UI and the data layer.
  */
@@ -17,7 +18,7 @@ class CalendarViewModel (private val repository: CalendarRepository) : ViewModel
         _calendarItems.value = repository.getCalendarItems()
     }
 
-    fun addEvent(event: Event) {
+    fun addEvent(event: calendarData.Event) {
         // Your addEvent logic here
         repository.addEvent(event)
         _calendarItems.value = repository.getCalendarItems()

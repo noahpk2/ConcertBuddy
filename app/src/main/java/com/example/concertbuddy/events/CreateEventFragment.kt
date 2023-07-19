@@ -9,6 +9,7 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.RadioGroup
 import com.example.concertbuddy.R
+import java.util.UUID
 
 /**
  * Fragment for creating an event. This fragment is responsible for displaying the create event form and interacting with the create event view model.
@@ -66,8 +67,16 @@ class CreateEventFragment : Fragment() {
             // Convert the eventTime to 24 hour time
             eventTime = eventTimeTo24Hour(eventTime, eventTimeAMorPM)
 
-            // Create an Event object using the retrieved values
-            val newEvent = Event(eventTitle, eventTime,eventLocation, eventDescription, eventDate )
+            // TODO: Create an Event object using the retrieved values
+            /*val newEvent = calendarData.Event(
+                event_id = UUID.fromString(eventDate),
+                day_id = getDayID(eventDate)
+                eventTitle,
+                eventTime,
+                eventLocation,
+                eventDescription,
+                eventDate
+            )*/
 
             // Use the created event object as needed
             // For example, you can pass it to another function or store it in a database
@@ -80,6 +89,9 @@ class CreateEventFragment : Fragment() {
     // TODO : create listener for button to create event
 
     // TODO: send event to "database" (arraylist)
+    fun getDayID(eventDate: String): UUID {
+    return UUID.randomUUID() //TODO: replace with actual day id
+    }
 }
 
 

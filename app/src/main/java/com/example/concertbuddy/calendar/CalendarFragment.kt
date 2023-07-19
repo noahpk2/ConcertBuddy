@@ -21,7 +21,7 @@ class CalendarFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var calendarAdapter: CalendarAdapter? = null
     private val viewModel: CalendarViewModel by viewModels{
-        CalendarViewModelFactory(repository = CalendarRepository())
+        CalendarViewModelFactory(repository = CalendarRepository(appContext = requireContext()))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

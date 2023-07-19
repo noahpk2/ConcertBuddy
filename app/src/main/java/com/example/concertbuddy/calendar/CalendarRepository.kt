@@ -1,16 +1,25 @@
 package com.example.concertbuddy.calendar
 
+import android.content.Context
 import android.util.Log
-import com.example.concertbuddy.events.Event
+import com.example.concertbuddy.application.ConcertBuddy.Companion.getDatabase
+import com.example.concertbuddy.application.DayDao
+import com.example.concertbuddy.application.LocalDatabase
+import com.example.concertbuddy.events.calendarData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Calendar
+import java.util.UUID
 
 /** This class is responsible for fetching and saving calendar data to the database
         |It is the "single source of truth" for the calendar */
 
-class CalendarRepository {
-
+class CalendarRepository(private val appContext: Context) {
+    private val database: LocalDatabase = getDatabase(appContext)
+    private val dayDao: DayDao = database.dayDao()
     private var calendarItems: MutableList<CalendarItem> = mutableListOf()
-    private var events: MutableList<Event> = mutableListOf()
+    private var events: MutableList<calendarData.Event> = mutableListOf()
 
     companion object {
         private const val TAG = "CalendarRepository"
@@ -60,6 +69,11 @@ class CalendarRepository {
                 val date = "$year-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}"
                 calendarItems.add(CalendarItem.DateItem(date, 1, emptyList()))
 
+                //add day to database
+                val day = calendarData.Day(UUID.fromString(date), date)
+
+
+
             }
             Log.d(TAG, "CalendarRepository: getCalendarItems")
             // Adjust the month and year index
@@ -69,6 +83,11 @@ class CalendarRepository {
         return calendarItems
     }
 
+    fun addDayToDatabase(day: calendarData.Day){
+        CoroutineScope(Dispatchers.IO).launch {
+            dayDao.insertDay(day)
+        }
+    }
     private fun getDaysInMonth(month:Int, year:Int):Int {
         /**
          * This function returns the number of days in a given month
@@ -103,10 +122,12 @@ class CalendarRepository {
 
     }
 
-    fun addEvent(event: Event) {
+    fun addEvent(event: calendarData.Event) {
         /**
          * This function adds an event to the calendarItems list
          */
+
+        //TODO: Add event to local database
         events.add(event)
         for (i in 0 until calendarItems.size) {
             if (calendarItems[i] is CalendarItem.DateItem) {
@@ -120,7 +141,7 @@ class CalendarRepository {
 
     }
 
-    fun saveEvent(event: Event) {
+    fun saveEvent(event: calendarData.Event) {
         // TODO: Save an event to the database. Both local and remote.
 
     }
