@@ -1,6 +1,6 @@
 package com.example.concertbuddy.events
 
-data class DiscoveryAPI(
+data class TicketmasterEvent(
     val id: String,
     val name: String,
     val url: String,
