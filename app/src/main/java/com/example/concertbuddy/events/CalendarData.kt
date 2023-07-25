@@ -1,15 +1,20 @@
 package com.example.concertbuddy.events
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import java.util.UUID
 
-sealed class calendarData {
+sealed class CalendarData {
     @Entity(
         tableName = "events",
         foreignKeys = [
-
+            ForeignKey(
+                entity = Day::class,
+                parentColumns = ["day_id"],
+                childColumns = ["day_id"],
+                onDelete = ForeignKey.CASCADE
+            )
         ]
     )
     data class Event(
@@ -20,13 +25,13 @@ sealed class calendarData {
 
         var day: String
         var month: String
-        var year: String 
+        var year: String
 
         init {
-        day = date.split("/")[1]
-        month = date.split("/")[0]
-        year = date.split("/")[2]
-
+            val parts = date.split("/")
+            month = parts[0]
+            day = parts[1]
+            year = parts[2]
         }
     }
     @Entity(tableName = "days")

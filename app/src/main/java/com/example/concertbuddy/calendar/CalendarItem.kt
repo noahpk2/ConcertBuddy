@@ -1,7 +1,7 @@
 package com.example.concertbuddy.calendar
 
 
-import com.example.concertbuddy.events.calendarData
+import com.example.concertbuddy.events.CalendarData
 
 
 sealed class CalendarItem {
@@ -11,7 +11,7 @@ sealed class CalendarItem {
      * 1. DateItem
      * 2. MonthHeaderItem
      */
-    data class DateItem(val date: String, val span: Int, var events: List<calendarData.Event>) : CalendarItem(){
+    data class DateItem(val date: String, val span: Int, var events: List<CalendarData.Event>) : CalendarItem(){
         //TODO: Add events to date item
         var month: String = ""
         var day: String = ""

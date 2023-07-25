@@ -2,7 +2,6 @@ package com.example.concertbuddy.profile
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.concertbuddy.events.calendarData
 import java.util.UUID
 
 sealed class Users {
