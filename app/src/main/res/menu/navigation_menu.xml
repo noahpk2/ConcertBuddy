@@ -4,12 +4,12 @@
         tools:ignore="HardcodedText">
 
         <item
-            android:id="@+id/profileActivity"
+            android:id="@+id/profileViewFragment"
             android:title="Profile"
 
             />
         <item
-            android:id="@+id/eventActivity"
+            android:id="@+id/ViewListEventsFragment"
             android:title="Events"
 
             />
