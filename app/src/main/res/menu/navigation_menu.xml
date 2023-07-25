@@ -4,6 +4,11 @@
         tools:ignore="HardcodedText">
 
         <item
+            android:id="@+id/calendarFragment"
+            android:title="Calendar"
+            />
+
+        <item
             android:id="@+id/profileViewFragment"
             android:title="Profile"
 
@@ -17,5 +22,6 @@
         <item
             android:id="@+id/nav_logout"
             android:title="Logout" />
+
 
     </menu>

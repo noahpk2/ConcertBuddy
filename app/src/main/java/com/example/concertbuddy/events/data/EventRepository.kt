@@ -1,13 +1,17 @@
 package com.example.concertbuddy.events.data
 
-import android.app.appsearch.SearchResults
 import android.content.Context
 import com.example.concertbuddy.application.ConcertBuddy
 import com.example.concertbuddy.application.EventDao
 import com.example.concertbuddy.application.LocalDatabase
-import com.example.concertbuddy.events.CalendarData
+import com.example.concertbuddy.calendar.CalendarData
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.UUID
 
 /**
  * <h1>EventRepository</h1>
@@ -18,20 +22,38 @@ class EventRepository(private val appContext: Context, private val SerpApiServic
 
     private val database: LocalDatabase = ConcertBuddy.getDatabase(appContext)
     private val eventDao: EventDao = database.eventDao()
+    private fun getDefaultParameters(): HashMap<String, String> {
+        return hashMapOf(
+            "q" to "Concerts in Denver",
+            "engine" to "google_events",
+            "hl" to "en",
+            "gl" to "us"
+        )
+    }
+
+    /**
+     * init: if the database is empty, fetch data from API's and store in database
+     */
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (eventDao.getAllEvents().isEmpty()) {
+                val response = getSearchResults(getDefaultParameters())
+                if (response != null) {
+                    val events = transformToEventList(response)
+                    addListEvents(events)
+                }
+            }
+        }
+
+    }
 
 
-    fun getSearchResults(parameters: HashMap<String,String>): SerpApiResponse? {
-        val call = SerpApiService.getResults(parameters)
+
+    fun getSearchResults(parameters: HashMap<String, String>): SerpApiResponse? {
+        val call = SerpApiService.getResults(getDefaultParameters())
         val response = call.execute()
-
         return if (response.isSuccessful) {
-            val moshi = Moshi.Builder().build()
-            val jsonAdapter: JsonAdapter<SerpApiResponse> =
-                moshi.adapter(SerpApiResponse::class.java)
-            val jsonString = response.body().toString()
-            return jsonAdapter.fromJson(jsonString)
-
-
+            response.body()
         } else {
             null
         }
@@ -41,20 +63,57 @@ class EventRepository(private val appContext: Context, private val SerpApiServic
         return eventDao.getAllEvents()
     }
 
+    suspend fun addEvent(event: CalendarData.Event) {
+        eventDao.insertEvent(event)
+    }
 
+    suspend fun addListEvents(events: List<CalendarData.Event>) {
+        for (event in events) {
+            eventDao.insertEvent(event)
+        }
+    }
     /**
      * <h1>translateResults</h1>
      * <p>Translates the results from the API's to the event struct</p>
      */
-    fun translateResults(serpApiResponse: SerpApiResponse){
+    fun transformToEventList(response: SerpApiResponse): List<CalendarData.Event> {
+        return response.events_results.map { eventResult ->
+            val eventId = UUID.randomUUID()  // Generate a unique event ID.
+            val dayId = UUID.randomUUID()    // Generate a unique day ID.
+            val date = extractDateFromWhen(eventResult.date.`when`)
 
-
+            CalendarData.Event(
+                event_id = eventId,
+                day_id = dayId,
+                title = eventResult.title,
+                time = extractTimeFromWhen(eventResult.date.`when`),
+                location = eventResult.address.joinToString(", "),
+                description = eventResult.description,
+                date = date
+            )
+        }
     }
 
 
+    // Helper function to extract date in MM/DD/YYYY format from the 'when' string.
+// You can modify this to fit the exact date format provided by the API.
+    fun extractDateFromWhen(whenString: String): String {
+        val parts = whenString.split(", ")
+        val startDate = parts[1].split(" ")
+        val month = startDate[0]
+        val day = startDate[1]
+        // Note: This assumes the current year since the year is not provided in the example JSON.
+        val year = Calendar.getInstance().get(Calendar.YEAR).toString()
+        return "$month/$day/$year"
+    }
 
-
-
+    // Helper function to extract the time range from the 'when' string.
+    fun extractTimeFromWhen(whenString: String): String {
+        val parts = whenString.split(" – ")
+        return if (parts.size == 2) "${parts[0].split(", ").last()} – ${
+            parts[1].split(", ").first()
+        }" else ""
+    }
 }
 
 

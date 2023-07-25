@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
-import com.example.concertbuddy.events.CalendarData
+import com.example.concertbuddy.calendar.CalendarData
 import com.example.concertbuddy.profile.Users
 import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson

@@ -1,4 +1,4 @@
-package com.example.concertbuddy.events
+package com.example.concertbuddy.calendar
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

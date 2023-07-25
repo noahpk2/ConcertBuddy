@@ -1,9 +1,6 @@
 package com.example.concertbuddy.calendar
 
 
-import com.example.concertbuddy.events.CalendarData
-
-
 sealed class CalendarItem {
     /**
      * This class represents the types of items that can be displayed in the calendar recyclerview.

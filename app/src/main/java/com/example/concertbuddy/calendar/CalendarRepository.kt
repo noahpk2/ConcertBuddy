@@ -5,7 +5,6 @@ import android.util.Log
 import com.example.concertbuddy.application.ConcertBuddy.Companion.getDatabase
 import com.example.concertbuddy.application.DayDao
 import com.example.concertbuddy.application.LocalDatabase
-import com.example.concertbuddy.events.CalendarData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
