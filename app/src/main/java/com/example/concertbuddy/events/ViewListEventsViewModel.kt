@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.concertbuddy.events.calendarData
+import com.example.concertbuddy.events.data.EventRepository
+
 
 class ViewListEventsViewModel : ViewModel() {
     // TODO: Implement the ViewModel
@@ -15,6 +16,7 @@ class ViewListEventsViewModelFactory(private val repository: EventRepository) : 
      * This class is responsible for creating the ViewListEventsViewModel, because the default ViewModel constructor
      * does not allow us to pass in any parameters.
      */
+    private final val repository: EventRepository = repository
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ViewListEventsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
