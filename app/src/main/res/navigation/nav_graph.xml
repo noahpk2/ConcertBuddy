@@ -30,6 +30,10 @@
         android:id="@+id/calendarFragment"
         android:name="com.example.concertbuddy.calendar.CalendarFragment"
         android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/ViewListEventsFragment"
+        android:name="com.example.concertbuddy.events.ViewListEventsFragment"
+        android:label="ViewListEventsFragment" />
 
 
 </navigation>

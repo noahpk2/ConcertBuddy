@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.concertbuddy.events.CalendarData
 
 /**
  * This is the ViewModel for the calendar. it provides an interface between the UI and the data layer.
