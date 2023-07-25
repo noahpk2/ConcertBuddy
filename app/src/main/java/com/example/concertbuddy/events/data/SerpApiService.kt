@@ -10,3 +10,4 @@ interface SerpApiService{
         @QueryMap parameters: HashMap<String,String>
     ): Call<SerpApiResponse>
 }
+

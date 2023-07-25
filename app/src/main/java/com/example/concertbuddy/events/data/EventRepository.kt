@@ -5,6 +5,7 @@ import android.content.Context
 import com.example.concertbuddy.application.ConcertBuddy
 import com.example.concertbuddy.application.EventDao
 import com.example.concertbuddy.application.LocalDatabase
+import com.example.concertbuddy.events.CalendarData
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 
@@ -35,6 +36,11 @@ class EventRepository(private val appContext: Context, private val SerpApiServic
             null
         }
     }
+
+    suspend fun getEvents(): MutableList<CalendarData.Event> {
+        return eventDao.getAllEvents()
+    }
+
 
     /**
      * <h1>translateResults</h1>

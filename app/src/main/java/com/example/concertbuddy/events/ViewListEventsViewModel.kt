@@ -4,10 +4,34 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.concertbuddy.events.calendarData
+import androidx.lifecycle.viewModelScope
 
-class ViewListEventsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+import com.example.concertbuddy.events.data.EventRepository
+import kotlinx.coroutines.launch
+
+class ViewListEventsViewModel(private val repository: EventRepository) : ViewModel(){
+    private val _events: MutableLiveData<MutableList<CalendarData.Event>> = MutableLiveData(mutableListOf())
+    val events: LiveData<MutableList<CalendarData.Event>> = _events
+
+    init {
+        viewModelScope.launch {
+            try {
+                val fetchedEvents = repository.getEvents()
+                _events.value = fetchedEvents
+            }
+            catch (e:Exception){
+                //Handle error
+            }
+        }
+
+    }
+
+    /*fun addEvent(event: CalendarData.Event) {
+        // Your addEvent logic here
+        repository.addEvent(event)
+        _events.value = repository.getEvents()
+    }*/
+
 }
 
 class ViewListEventsViewModelFactory(private val repository: EventRepository) : ViewModelProvider.Factory {

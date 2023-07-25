@@ -101,6 +101,13 @@ interface EventDao{
     @Query("SELECT * FROM events WHERE day_id = :day_id")
     suspend fun getEventsForDay(day_id: UUID): List<CalendarData.Event>
 
+    @Query("SELECT * FROM events")
+    suspend fun getAllEvents(): MutableList<CalendarData.Event> {
+        val events = mutableListOf<CalendarData.Event>()
+
+        return events
+    }
+
 }
 
 @Dao
