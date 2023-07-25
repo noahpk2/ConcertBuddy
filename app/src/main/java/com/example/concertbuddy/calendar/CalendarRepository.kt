@@ -5,7 +5,7 @@ import android.util.Log
 import com.example.concertbuddy.application.ConcertBuddy.Companion.getDatabase
 import com.example.concertbuddy.application.DayDao
 import com.example.concertbuddy.application.LocalDatabase
-import com.example.concertbuddy.events.calendarData
+import com.example.concertbuddy.events.CalendarData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ class CalendarRepository(private val appContext: Context) {
     private val database: LocalDatabase = getDatabase(appContext)
     private val dayDao: DayDao = database.dayDao()
     private var calendarItems: MutableList<CalendarItem> = mutableListOf()
-    private var events: MutableList<calendarData.Event> = mutableListOf()
+    private var events: MutableList<CalendarData.Event> = mutableListOf()
 
     companion object {
         private const val TAG = "CalendarRepository"
@@ -70,7 +70,7 @@ class CalendarRepository(private val appContext: Context) {
                 calendarItems.add(CalendarItem.DateItem(date, 1, emptyList()))
 
                 //add day to database
-                val day = calendarData.Day(UUID.fromString(date), date)
+                val day = CalendarData.Day(UUID.fromString(date), date)
 
 
 
@@ -83,7 +83,7 @@ class CalendarRepository(private val appContext: Context) {
         return calendarItems
     }
 
-    fun addDayToDatabase(day: calendarData.Day){
+    fun addDayToDatabase(day: CalendarData.Day){
         CoroutineScope(Dispatchers.IO).launch {
             dayDao.insertDay(day)
         }
@@ -122,7 +122,7 @@ class CalendarRepository(private val appContext: Context) {
 
     }
 
-    fun addEvent(event: calendarData.Event) {
+    fun addEvent(event: CalendarData.Event) {
         /**
          * This function adds an event to the calendarItems list
          */
@@ -141,7 +141,7 @@ class CalendarRepository(private val appContext: Context) {
 
     }
 
-    fun saveEvent(event: calendarData.Event) {
+    fun saveEvent(event: CalendarData.Event) {
         // TODO: Save an event to the database. Both local and remote.
 
     }

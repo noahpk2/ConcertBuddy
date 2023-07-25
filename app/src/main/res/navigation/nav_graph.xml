@@ -4,10 +4,15 @@
     app:startDestination="@id/calendarFragment"
     android:id="@+id/nav_graph">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.concertbuddy.activities.MainActivity"
-        android:label="MainActivity"/>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.concertbuddy.profile.UserRegisterFragment"
+        android:label="RegisterFragment" />
+
+    <fragment
+        android:id="@+id/eventViewFragment"
+        android:name="com.example.concertbuddy.events.ViewSingleEventFragment"
+        android:label="EventViewFragment" />
 
     <fragment
         android:id="@+id/profileViewFragment"

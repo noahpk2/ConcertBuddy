@@ -2,21 +2,15 @@ package com.example.concertbuddy.application
 
 import androidx.room.Dao
 import androidx.room.Database
-import androidx.room.DatabaseConfiguration
 import androidx.room.Delete
-import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.Insert
-import androidx.room.InvalidationTracker
 import androidx.room.OnConflictStrategy
-import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
-import androidx.sqlite.db.SupportSQLiteOpenHelper
-import com.example.concertbuddy.events.calendarData
+import com.example.concertbuddy.events.CalendarData
 import com.example.concertbuddy.profile.Users
 import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson
@@ -24,8 +18,8 @@ import java.util.UUID
 
 
 @Database(entities = [
-    calendarData.Event::class,
-    calendarData.Day::class, Users.User::class,
+    CalendarData.Event::class,
+    CalendarData.Day::class, Users.User::class,
     Users.Friend::class], version = 1)
 @TypeConverters(
     LocalDatabase.UUIDConverter::class,
@@ -56,14 +50,14 @@ abstract class LocalDatabase: RoomDatabase() {
 
         @TypeConverter
         @JvmStatic
-        fun fromEventList(events: List<calendarData.Event>): String {
+        fun fromEventList(events: List<CalendarData.Event>): String {
             return gson.toJson(events)
         }
 
         @TypeConverter
         @JvmStatic
-        fun toEventList(eventsString: String): List<calendarData.Event> {
-            val listType = object : TypeToken<List<calendarData.Event>>() {}.type
+        fun toEventList(eventsString: String): List<CalendarData.Event> {
+            val listType = object : TypeToken<List<CalendarData.Event>>() {}.type
             return gson.fromJson(eventsString, listType)
         }
     }
@@ -94,18 +88,18 @@ class Gson {
 @Dao
 interface DayDao{
     @Insert
-    suspend fun insertDay(day: calendarData.Day): Long // returns the row id of the inserted day, or -1 if failed
+    suspend fun insertDay(day: CalendarData.Day): Long // returns the row id of the inserted day, or -1 if failed
     @Query("SELECT * FROM days")
-    suspend fun getAllDays(): List<calendarData.Day>
+    suspend fun getAllDays(): List<CalendarData.Day>
 
 }
 @Dao
 interface EventDao{
     @Insert
-    suspend fun insertEvent(event: calendarData.Event): Long // returns the row id of the inserted event, or -1 if failed
+    suspend fun insertEvent(event: CalendarData.Event): Long // returns the row id of the inserted event, or -1 if failed
 
     @Query("SELECT * FROM events WHERE day_id = :day_id")
-    suspend fun getEventsForDay(day_id: UUID): List<calendarData.Event>
+    suspend fun getEventsForDay(day_id: UUID): List<CalendarData.Event>
 
 }
 
