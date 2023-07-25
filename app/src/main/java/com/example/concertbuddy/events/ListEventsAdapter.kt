@@ -30,9 +30,10 @@ class ListEventsAdapter(emptyList: List<Any>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val event = items[position]
         when(holder) {
             is EventViewHolder -> {
-                val event = items[position]
+                val eventItem = event as CalendarData.Event
                 holder.title.text = event.title  // Assuming 'title' is a property of CalendarData.Event
                 holder.date.text = event.date  // Assuming 'date' is a property of CalendarData.Event
             }

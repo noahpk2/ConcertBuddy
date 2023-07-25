@@ -5,19 +5,21 @@ plugins {
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.devtools.ksp'
+//apply plugin: 'com.google.devtools.ksp'
 
 android {
     namespace 'com.example.concertbuddy'
     compileSdk 34
-
+    buildFeatures {
+        buildConfig true
+    }
     defaultConfig {
         applicationId "com.example.concertbuddy"
         minSdk 28
         targetSdk 34
         versionCode 1
         versionName "1.0"
-
+        buildConfigField "String", "MY_API_KEY", "\"${MY_API_KEY}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,13 +42,15 @@ android {
 }
 
 dependencies {
-    def latest_version = "1.12.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.20"
+
+    def latest_version = "1.13.0"
     implementation "com.squareup.moshi:moshi:$latest_version"
     implementation "com.squareup.moshi:moshi-kotlin:$latest_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$latest_version"
+//    kapt "com.squareup.moshi:moshi-kotlin-codegen:$latest_version"
+    implementation "com.squareup.moshi:moshi-adapters:$latest_version"
 
 
-    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
 
@@ -58,7 +62,7 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
@@ -74,7 +78,7 @@ dependencies {
 
 
     // To use Kotlin Symbol Processing (KSP)
-    ksp "androidx.room:room-compiler:$room_version"
+    //ksp "androidx.room:room-compiler:$room_version"
 
     // optional - RxJava2 support for Room
     implementation "androidx.room:room-rxjava2:$room_version"

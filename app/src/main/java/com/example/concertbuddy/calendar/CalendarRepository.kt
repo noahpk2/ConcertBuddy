@@ -44,8 +44,7 @@ class CalendarRepository(private val appContext: Context) {
         val calendar = Calendar.getInstance()
         val currentMonth = calendar.get(Calendar.MONTH) + 1
         val currentYear = calendar.get(Calendar.YEAR)
-        //val eventToAdd = calendar.get(Calendar.EVENT)
-        /* TODO: Add actual events */
+
 
         var month = currentMonth
         var year = currentYear
@@ -70,6 +69,8 @@ class CalendarRepository(private val appContext: Context) {
 
                 //add day to database
                 val day = CalendarData.Day(UUID.randomUUID(), date)
+                Log.d(TAG, "CalendarRepository: getCalendarItems: date format: $date")
+                addDayToDatabase(day)
 
 
 

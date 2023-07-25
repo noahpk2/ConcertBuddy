@@ -81,9 +81,6 @@ abstract class LocalDatabase: RoomDatabase() {
 
 }
 
-class Gson {
-
-}
 
 @Dao
 interface DayDao{
@@ -92,6 +89,27 @@ interface DayDao{
     @Query("SELECT * FROM days")
     suspend fun getAllDays(): List<CalendarData.Day>
 
+    @Query("SELECT * FROM days WHERE date = :date")
+    suspend fun getDayByDate(date: String): CalendarData.Day? {
+        val days = getAllDays()
+        for (day in days) {
+            if (day.date == date) {
+                return day
+            }
+        }
+        return null
+    }
+
+    @Query("SELECT * FROM days WHERE day_id = :id")
+    suspend fun getDayById(id: UUID): CalendarData.Day? {
+        val days = getAllDays()
+        for (day in days) {
+            if (day.day_id == id) {
+                return day
+            }
+        }
+        return null
+    }
 }
 @Dao
 interface EventDao{

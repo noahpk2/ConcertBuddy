@@ -138,7 +138,7 @@
         android:layout_weight=".1"
         android:text="@string/create_event_button"
         android:id="@+id/create_event_button"
-        android:onClick="createEvent"
+
         >
 
     </Button>

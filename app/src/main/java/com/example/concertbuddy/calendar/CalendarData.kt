@@ -2,6 +2,7 @@ package com.example.concertbuddy.calendar
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.UUID
 
@@ -15,7 +16,8 @@ sealed class CalendarData {
                 childColumns = ["day_id"],
                 onDelete = ForeignKey.CASCADE
             )
-        ]
+        ],
+        indices = [Index("day_id")]
     )
     data class Event(
         @PrimaryKey val event_id: UUID, val day_id: UUID,
@@ -28,10 +30,10 @@ sealed class CalendarData {
         var year: String
 
         init {
-            val parts = date.split("/")
-            month = parts[0]
-            day = parts[1]
-            year = parts[2]
+            val parts = date.split("-")
+            month = parts[1]
+            day = parts[2]
+            year = parts[0]
         }
     }
     @Entity(tableName = "days")

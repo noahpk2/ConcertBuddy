@@ -55,7 +55,7 @@ class CalendarAdapter(emptyList: List<Any>) :
 
         when (holder) {
             is DateViewHolder -> {
-                val dateViewHolder = holder as DateViewHolder
+                val dateViewHolder = holder
                 val dateItem = item as CalendarItem.DateItem
                 dateViewHolder.textView.text = item.day.trimStart('0')
                 if (dateItem.events.isNotEmpty()){
@@ -65,10 +65,9 @@ class CalendarAdapter(emptyList: List<Any>) :
                 }
             }
             is MonthHeaderViewHolder -> {
-                val monthHeaderViewHolder = holder as MonthHeaderViewHolder
                 val monthHeaderItem = item as CalendarItem.MonthHeaderItem
                 val headerText = "${monthHeaderItem.month} ${monthHeaderItem.year}"
-                monthHeaderViewHolder.textView.text = headerText
+                holder.textView.text = headerText
             }
         }
     }
