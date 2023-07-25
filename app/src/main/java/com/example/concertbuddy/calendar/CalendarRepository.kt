@@ -45,7 +45,7 @@ class CalendarRepository(private val appContext: Context) {
         val calendar = Calendar.getInstance()
         val currentMonth = calendar.get(Calendar.MONTH) + 1
         val currentYear = calendar.get(Calendar.YEAR)
-
+        val eventToAdd: calendar.get(Calendar.EVENT)
         /* TODO: Add actual events */
 
         var month = currentMonth

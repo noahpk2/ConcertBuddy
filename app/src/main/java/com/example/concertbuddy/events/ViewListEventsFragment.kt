@@ -7,14 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.concertbuddy.R
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+/**
+ * Fragment for the calendar. This fragment is responsible for displaying the Events and interacting with the single event view model.
+ *
+ */
+
 
 class ViewListEventsFragment : Fragment() {
 
     companion object {
         fun newInstance() = ViewListEventsFragment()
     }
-
-    private lateinit var viewModel: ViewListEventsViewModel
+    private lateinit var recyclerView: RecyclerView
+    private val viewModel: ViewListEventsViewModel by viewModels{
+        ViewListEventsViewModelFactory(repository = EventRepository(appContext = requireContext()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
