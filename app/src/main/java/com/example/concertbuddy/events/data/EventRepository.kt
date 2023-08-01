@@ -19,10 +19,20 @@ import java.util.UUID
  * <h1>EventRepository</h1>
  * <p>Event Repository for Fetching Data from API's, translating to event struct, and storing in local database</p>
  */
-class EventRepository(private val appContext: Context, private val SerpApiService: SerpApiService) {
+class EventRepository private constructor(private val appContext: Context, private val _SerpApiService: SerpApiService) {
 
     companion object {
         private const val TAG = "EventRepository"
+        @Volatile
+        private var INSTANCE: EventRepository? = null
+
+        fun getInstance(appContext: Context,_SerpApiService:SerpApiService): EventRepository {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: EventRepository(appContext, _SerpApiService ).also {
+                    INSTANCE = it
+                }
+            }
+        }
     }
 
     private val database: LocalDatabase = ConcertBuddy.getDatabase(appContext)
@@ -61,7 +71,7 @@ class EventRepository(private val appContext: Context, private val SerpApiServic
 
     private fun getSearchResults(): SerpApiResponse? {
         Log.d(TAG, "getSearchResults:  ")
-        val call = SerpApiService.getResults(getDefaultParameters())
+        val call = _SerpApiService.getResults(getDefaultParameters())
         val response = call.execute()
         return if (response.isSuccessful) {
             Log.d(TAG, "getSearchResults: response is successful")
@@ -104,7 +114,8 @@ class EventRepository(private val appContext: Context, private val SerpApiServic
 
             }
 
-                eventDao.insertEvent(event)
+                val rowid = eventDao.insertEvent(event)
+                Log.d(TAG, "addListEvents: rowid = $rowid")
 
         }
 

@@ -19,7 +19,7 @@ class ListEventsAdapter(emptyList: List<Any>) :
     private var items: MutableList<CalendarData.Event> = mutableListOf()
 
     companion object {
-        private const val TAG = "ListEventAdapter"
+        private const val TAG = "ListEventsAdapter"
 
     }
 

@@ -12,7 +12,7 @@ import java.util.Calendar
 import java.util.UUID
 
 /** This class is responsible for fetching and saving calendar data to the database
-        |It is the "single source of truth" for the calendar */
+|It is the "single source of truth" for the calendar */
 
 class CalendarRepository(private val appContext: Context) {
     private val database: LocalDatabase = getDatabase(appContext)
@@ -64,14 +64,14 @@ class CalendarRepository(private val appContext: Context) {
             calendarItems.add(CalendarItem.DateItem("", 2, emptyList()))
             // Add calendar cells for each day of the month
             for (day in 1..daysInMonth) {
-                val date = "$year-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}"
+                val date =
+                    "$year-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}"
                 calendarItems.add(CalendarItem.DateItem(date, 1, emptyList()))
 
                 //add day to database
                 val day = CalendarData.Day(UUID.randomUUID(), date)
                 Log.d(TAG, "CalendarRepository: getCalendarItems: date format: $date")
                 addDayToDatabase(day)
-
 
 
             }
@@ -83,12 +83,13 @@ class CalendarRepository(private val appContext: Context) {
         return calendarItems
     }
 
-    fun addDayToDatabase(day: CalendarData.Day){
+    fun addDayToDatabase(day: CalendarData.Day) {
         CoroutineScope(Dispatchers.IO).launch {
             dayDao.insertDay(day)
         }
     }
-    private fun getDaysInMonth(month:Int, year:Int):Int {
+
+    private fun getDaysInMonth(month: Int, year: Int): Int {
         /**
          * This function returns the number of days in a given month
          */
@@ -100,7 +101,7 @@ class CalendarRepository(private val appContext: Context) {
     }
 
 
-    private fun monthToString(month: Int):String{
+    private fun monthToString(month: Int): String {
         /**
          * This function returns the name of a month given the month number
          */

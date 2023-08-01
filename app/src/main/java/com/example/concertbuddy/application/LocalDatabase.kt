@@ -1,5 +1,6 @@
 package com.example.concertbuddy.application
 
+import android.util.Log
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Delete
@@ -114,17 +115,14 @@ interface DayDao{
 @Dao
 interface EventDao{
     @Insert
-    suspend fun insertEvent(event: CalendarData.Event): Long // returns the row id of the inserted event, or -1 if failed
+    suspend fun insertEvent(event: CalendarData.Event): Long
+    // returns the row id of the inserted event, or -1 if failed
 
     @Query("SELECT * FROM events WHERE day_id = :day_id")
     suspend fun getEventsForDay(day_id: UUID): List<CalendarData.Event>
 
     @Query("SELECT * FROM events")
-    suspend fun getAllEvents(): MutableList<CalendarData.Event> {
-        val events = mutableListOf<CalendarData.Event>()
-
-        return events
-    }
+    suspend fun getAllEvents(): MutableList<CalendarData.Event>
 
 }
 

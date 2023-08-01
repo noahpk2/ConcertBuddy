@@ -34,9 +34,9 @@ class ViewListEventsFragment : Fragment() {
     private var listEventsAdapter: ListEventsAdapter? = null
     private val viewModel: ViewListEventsViewModel by viewModels {
         ViewListEventsViewModelFactory(
-            repository = EventRepository(
+            repository = EventRepository.getInstance(
                 appContext = requireContext(),
-                SerpApiService = SerpApiClient.create()
+                _SerpApiService = SerpApiClient.create()
             )
         )
     }

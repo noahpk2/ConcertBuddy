@@ -29,11 +29,11 @@
             android:background="@color/light_blue"
             app:navigationIcon="@android:drawable/ic_menu_sort_by_size" />
 
-        <!--<FrameLayout
+        <FrameLayout
             android:id="@+id/fragmentContainerFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />-->
+            android:orientation="vertical" />
 
     </LinearLayout>
 
