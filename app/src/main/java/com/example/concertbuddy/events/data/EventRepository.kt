@@ -55,6 +55,7 @@ class EventRepository private constructor(private val appContext: Context, priva
     init {
         Log.d(TAG, "init: ")
         CoroutineScope(Dispatchers.IO).launch {
+            eventDao.deleteDuplicateEvents()
             if (eventDao.getAllEvents().isEmpty()) {
                 Log.d(TAG, "init: database is empty")
                 val response = getSearchResults()
@@ -118,6 +119,7 @@ class EventRepository private constructor(private val appContext: Context, priva
                 Log.d(TAG, "addListEvents: rowid = $rowid")
 
         }
+        eventDao.deleteDuplicateEvents()
 
     }
     /**

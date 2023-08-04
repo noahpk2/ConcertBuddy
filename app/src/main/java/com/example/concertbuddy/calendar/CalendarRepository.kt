@@ -4,7 +4,10 @@ import android.content.Context
 import android.util.Log
 import com.example.concertbuddy.application.ConcertBuddy.Companion.getDatabase
 import com.example.concertbuddy.application.DayDao
+import com.example.concertbuddy.application.EventDao
 import com.example.concertbuddy.application.LocalDatabase
+import com.example.concertbuddy.events.data.EventRepository
+import com.example.concertbuddy.events.data.SerpApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,27 +18,27 @@ import java.util.UUID
 |It is the "single source of truth" for the calendar */
 
 class CalendarRepository(private val appContext: Context) {
+
     private val database: LocalDatabase = getDatabase(appContext)
     private val dayDao: DayDao = database.dayDao()
+    private val eventDao = database.eventDao()
     private var calendarItems: MutableList<CalendarItem> = mutableListOf()
     private var events: MutableList<CalendarData.Event> = mutableListOf()
 
-    companion object {
-        private const val TAG = "CalendarRepository"
-    }
 
     init {
-        // Initialize the calendarItems list
-        calendarItems = getCalendarItems()
-    }
+        CoroutineScope(Dispatchers.IO).launch {
+                calendarItems = getCalendarItems()
+            }
+        }
 
-    fun getCalendarItems(): MutableList<CalendarItem> {
-        """This function returns a list of CalendarItems that will be used to populate the calendar
-            |This includes the month headers and the date objects
-        """
-            .trimMargin()
 
-        var calendarItems = mutableListOf<CalendarItem>()
+    /**This function returns a list of CalendarItems that will be used to populate the calendar.
+    * This includes the month headers and the date objects
+    */
+    suspend fun getCalendarItems(): MutableList<CalendarItem> {
+
+
 
         if (calendarItems.isNotEmpty()) {
             return calendarItems
@@ -58,7 +61,7 @@ class CalendarRepository(private val appContext: Context) {
 
             calendarItems.add(CalendarItem.MonthHeaderItem(monthToString(month), year.toString()))
 
-            val daysInMonth = getDaysInMonth(month, year)
+            val daysInMonth = getDaysInMonth(month, year,TAG)
 
 
             calendarItems.add(CalendarItem.DateItem("", 2, emptyList()))
@@ -66,7 +69,14 @@ class CalendarRepository(private val appContext: Context) {
             for (day in 1..daysInMonth) {
                 val date =
                     "$year-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}"
+                val eventsForDay = eventDao.getEventsForDay(date)
                 calendarItems.add(CalendarItem.DateItem(date, 1, emptyList()))
+
+
+                // Get events from the database for the date
+
+
+                
 
                 //add day to database
                 val day = CalendarData.Day(UUID.randomUUID(), date)
@@ -89,12 +99,12 @@ class CalendarRepository(private val appContext: Context) {
         }
     }
 
-    private fun getDaysInMonth(month: Int, year: Int): Int {
+    private fun getDaysInMonth(month: Int, year: Int, tag: String): Int {
         /**
          * This function returns the number of days in a given month
          */
 
-        Log.d(TAG, "CalendarRepository: getDaysInMonth: month: $month, year: $year")
+        Log.d(tag, "CalendarRepository: getDaysInMonth: month: $month, year: $year")
         val calendar = Calendar.getInstance()
         calendar.set(year, month, 1)
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
@@ -128,7 +138,7 @@ class CalendarRepository(private val appContext: Context) {
          * This function adds an event to the calendarItems list
          */
 
-        //TODO: Add event to local database
+        //TODO: Add event to local database | Also, more efficient way to do this?
         events.add(event)
         for (i in 0 until calendarItems.size) {
             if (calendarItems[i] is CalendarItem.DateItem) {
@@ -139,11 +149,27 @@ class CalendarRepository(private val appContext: Context) {
                 }
             }
         }
-
     }
 
     fun saveEvent(event: CalendarData.Event) {
         // TODO: Save an event to the database. Both local and remote.
 
     }
+
+companion object {
+    private const val TAG = "CalendarRepository"
+
+    //  Singleton instantiation
+    @Volatile
+    private var INSTANCE: CalendarRepository? = null
+
+    fun getInstance(appContext: Context): CalendarRepository {
+        return INSTANCE ?: synchronized(this) {
+            INSTANCE ?: CalendarRepository(appContext).also {
+                INSTANCE = it
+            }
+        }
+    }
+}
+
 }

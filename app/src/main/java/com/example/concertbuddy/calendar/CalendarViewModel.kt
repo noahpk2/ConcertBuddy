@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 /**
  * This is the ViewModel for the calendar. it provides an interface between the UI and the data layer.
@@ -13,11 +15,18 @@ class CalendarViewModel (private val repository: CalendarRepository) : ViewModel
     val calendarItems: LiveData<MutableList<CalendarItem>> = _calendarItems
 
     init {
-        // You may want to move getCalendarItems() logic here
-        _calendarItems.value = repository.getCalendarItems()
+        viewModelScope.launch {
+            try {
+                val fetchedEvents = repository.getCalendarItems()
+                _calendarItems.value = fetchedEvents
+            }
+            catch (e:Exception){
+                //Handle error
+            }
+        }
     }
 
-    fun addEvent(event: CalendarData.Event) {
+    suspend fun addEvent(event: CalendarData.Event) {
         // Your addEvent logic here
         repository.addEvent(event)
         _calendarItems.value = repository.getCalendarItems()

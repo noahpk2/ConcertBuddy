@@ -3,10 +3,14 @@ package com.example.concertbuddy.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -37,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+        val backButton = toolbar.findViewById<ImageButton>(R.id.backButton)
+
         navController = navHostFragment.navController
 
         drawerLayout = findViewById(R.id.my_drawer_layout)
@@ -54,11 +61,16 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     // This will allow the other menu item selections to navigate properly
                     NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    backButton.isVisible = true
                     drawerLayout.closeDrawers() // Close navigation drawer
 
                     true
                 }
             }
+        }
+        backButton.setOnClickListener() {
+            // navigate to the previous fragment
+            navController.popBackStack()
         }
 
         actionBarDrawerToggle = ActionBarDrawerToggle(

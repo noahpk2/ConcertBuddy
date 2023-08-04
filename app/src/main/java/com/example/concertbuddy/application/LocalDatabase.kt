@@ -118,11 +118,18 @@ interface EventDao{
     suspend fun insertEvent(event: CalendarData.Event): Long
     // returns the row id of the inserted event, or -1 if failed
 
-    @Query("SELECT * FROM events WHERE day_id = :day_id")
-    suspend fun getEventsForDay(day_id: UUID): List<CalendarData.Event>
+    @Query("SELECT * FROM events WHERE date = :date")
+    suspend fun getEventsForDay(date:String): List<CalendarData.Event>
 
-    @Query("SELECT * FROM events")
+    @Query("SELECT * FROM events ORDER BY date ASC")
     suspend fun getAllEvents(): MutableList<CalendarData.Event>
+
+    //delete duplicate events by comparing the event name and date
+    @Query("DELETE FROM events WHERE event_id NOT IN (SELECT MIN(event_id) FROM events GROUP BY title, date)")
+    suspend fun deleteDuplicateEvents()
+
+
+
 
 }
 
