@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.concertbuddy.R
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +30,6 @@ class ViewListEventsFragment : Fragment() {
     companion object {
 
     }
-
     private lateinit var recyclerView: RecyclerView
     private var listEventsAdapter: ListEventsAdapter? = null
     private val viewModel: ViewListEventsViewModel by viewModels {
@@ -54,6 +54,8 @@ class ViewListEventsFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_view_list_events, container, false)
         recyclerView = rootView.findViewById(R.id.list_events)
 
+
+
         // Initialize adapter
         listEventsAdapter = ListEventsAdapter(emptyList())
 
@@ -70,6 +72,19 @@ class ViewListEventsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = listEventsAdapter
 
+
+
+
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navController = NavHostFragment.findNavController(this)
+        val createEventButton = view.findViewById<View>(R.id.create_event_button)
+        createEventButton.setOnClickListener {
+            navController.navigate(R.id.createEventFragment)
+
+        }
     }
 }
