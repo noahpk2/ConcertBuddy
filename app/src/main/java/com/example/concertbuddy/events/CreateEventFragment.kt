@@ -1,5 +1,6 @@
 package com.example.concertbuddy.events
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +10,16 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.RadioGroup
 import com.example.concertbuddy.R
+import com.example.concertbuddy.application.ConcertBuddy.Companion.getDatabase
+import com.example.concertbuddy.application.DayDao
+import com.example.concertbuddy.application.LocalDatabase
+import com.example.concertbuddy.calendar.CalendarData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.util.UUID
+
 
 /**
  * Fragment for creating an event. This fragment is responsible for displaying the create event form and interacting with the create event view model.
@@ -19,6 +29,10 @@ class CreateEventFragment : Fragment() {
     companion object {
         private const val TAG = "CreateEventFragment"
     }
+    private lateinit var appContext: Context
+    private lateinit var database: LocalDatabase
+    private lateinit var dayDao: DayDao
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +48,15 @@ class CreateEventFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_create_event, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        appContext = requireContext().applicationContext
+        database = getDatabase(appContext)
+        dayDao = database.dayDao()
+
+        // Rest of your onViewCreated method code...
 
 
 
@@ -59,7 +80,8 @@ class CreateEventFragment : Fragment() {
             // Retrieve the values from the EditText fields
             var eventTitle = view.findViewById<EditText>(R.id.event_name_edit_text).toString()
             var eventDescription= view.findViewById<EditText>(R.id.event_description_edit_text).toString()
-            var eventDate = view.findViewById<DatePicker>(R.id.event_date_picker).toString()
+            var datePicker = view.findViewById<DatePicker>(R.id.event_date_picker)
+            var eventDate = "${datePicker.year}-${datePicker.month + 1}-${datePicker.dayOfMonth}"
             var eventLocation = view.findViewById<EditText>(R.id.event_location_edit_text).toString()
             var eventTime = view.findViewById<EditText>(R.id.event_time_edit_text).toString()
             var eventTimeAMorPM = view.findViewById<RadioGroup>(R.id.radioGroupAMPM).toString()
@@ -68,15 +90,27 @@ class CreateEventFragment : Fragment() {
             eventTime = eventTimeTo24Hour(eventTime, eventTimeAMorPM)
 
             // TODO: Create an Event object using the retrieved values
-            /*val newEvent = calendarData.Event(
-                event_id = UUID.fromString(eventDate),
-                day_id = getDayID(eventDate)
-                eventTitle,
-                eventTime,
-                eventLocation,
-                eventDescription,
-                eventDate
-            )*/
+            CoroutineScope(Dispatchers.IO).launch {
+                val newEvent = CalendarData.Event(
+                    event_id = UUID.randomUUID(),
+                    day_id = (dayDao.getDayByDate(eventDate) ?: UUID.randomUUID()) as UUID,
+                    title = eventTitle,
+                    eventTime,
+                    eventLocation,
+                    eventDescription,
+                    eventDate
+                )
+            }
+
+            //eventDatabase.add(newEvent)/*val newEvent = calendarData.Event(
+            //event_id = UUID.fromString(eventDate),
+            // day_id = getDayID(eventDate)
+            //eventTitle,
+            //eventTime,
+            //eventLocation,
+            //eventDescription,
+            //eventDate
+            //)*/
 
             // Use the created event object as needed
             // For example, you can pass it to another function or store it in a database
@@ -90,7 +124,7 @@ class CreateEventFragment : Fragment() {
 
     // TODO: send event to "database" (arraylist)
     fun getDayID(eventDate: String): UUID {
-    return UUID.randomUUID() //TODO: replace with actual day id
+        return UUID.randomUUID() //TODO: replace with actual day id
     }
 }
 
