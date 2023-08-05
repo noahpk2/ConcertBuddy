@@ -5,13 +5,14 @@
     android:id="@+id/nav_graph">
 
     <fragment
-        android:id="@+id/registerFragment"
+        android:id="@+id/UserRegisterFragment"
         android:name="com.example.concertbuddy.profile.UserRegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_register_to_profile"
             app:destination="@id/profileViewFragment" />
     </fragment>
+
 
     <fragment
         android:id="@+id/ViewSingleEventFragment"
@@ -46,6 +47,7 @@
             app:destination="@id/ViewSingleEventFragment">
         </action>
     </fragment>
+
 
 
 

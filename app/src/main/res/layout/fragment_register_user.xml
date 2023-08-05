@@ -33,7 +33,7 @@
         android:textSize="36sp" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/editTextEmail"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
@@ -75,7 +75,7 @@
         tools:visibility="invisible" />
 
     <EditText
-        android:id="@+id/editTextPassword1"
+        android:id="@+id/editTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight=".5"
@@ -107,7 +107,7 @@
         tools:visibility="invisible" />
 
     <EditText
-        android:id="@+id/editTextEnterUsername"
+        android:id="@+id/editTextUsername"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
@@ -135,7 +135,7 @@
         android:paddingHorizontal="12dp" />
 
     <EditText
-        android:id="@+id/editTextUserLocation"
+        android:id="@+id/editTextLocation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
@@ -150,6 +150,7 @@
         android:paddingHorizontal="48dp" />
 
     <Button
+        android:id="@+id/buttonRegister"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="48dp"
