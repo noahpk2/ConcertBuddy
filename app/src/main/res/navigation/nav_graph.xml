@@ -7,7 +7,11 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.concertbuddy.profile.UserRegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_register_to_profile"
+            app:destination="@id/profileViewFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/eventViewFragment"

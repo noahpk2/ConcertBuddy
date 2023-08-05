@@ -102,20 +102,6 @@ class CreateEventFragment : Fragment() {
                 )
             }
 
-            //eventDatabase.add(newEvent)/*val newEvent = calendarData.Event(
-            //event_id = UUID.fromString(eventDate),
-            // day_id = getDayID(eventDate)
-            //eventTitle,
-            //eventTime,
-            //eventLocation,
-            //eventDescription,
-            //eventDate
-            //)*/
-
-            // Use the created event object as needed
-            // For example, you can pass it to another function or store it in a database
-
-            // Clear the EditText fields if needed
 
         }
     }
