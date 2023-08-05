@@ -1,6 +1,7 @@
 package com.example.concertbuddy.application
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Delete
@@ -128,6 +129,9 @@ interface EventDao{
     @Query("DELETE FROM events WHERE event_id NOT IN (SELECT MIN(event_id) FROM events GROUP BY title, date)")
     suspend fun deleteDuplicateEvents()
 
+    //get event by id
+    @Query("SELECT * FROM events WHERE event_id = :id")
+    suspend fun getEventById(id: UUID): CalendarData.Event?
 
 
 

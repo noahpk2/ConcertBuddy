@@ -1,10 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id "androidx.navigation.safeargs.kotlin"
+
+
 
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 //apply plugin: 'com.google.devtools.ksp'
 
 android {

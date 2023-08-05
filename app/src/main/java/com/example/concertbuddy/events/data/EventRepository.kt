@@ -2,6 +2,7 @@ package com.example.concertbuddy.events.data
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.concertbuddy.BuildConfig
 import com.example.concertbuddy.application.ConcertBuddy
 import com.example.concertbuddy.application.EventDao
@@ -68,7 +69,9 @@ class EventRepository private constructor(private val appContext: Context, priva
 
     }
 
-
+    suspend fun getEvent(eventId:UUID): CalendarData.Event? {
+        return eventDao.getEventById(eventId)
+    }
 
     private fun getSearchResults(): SerpApiResponse? {
         Log.d(TAG, "getSearchResults:  ")

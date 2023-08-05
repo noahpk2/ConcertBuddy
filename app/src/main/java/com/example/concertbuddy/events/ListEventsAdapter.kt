@@ -8,12 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.concertbuddy.R
 import com.example.concertbuddy.calendar.CalendarData
+import java.util.UUID
 
 /**
  * Adapter for the calendar recycler view. This adapter is responsible for displaying the calendar items in the recycler view.
  *
  */
-class ListEventsAdapter(emptyList: List<Any>) :
+class ListEventsAdapter(private val listener: OnItemClickListener, emptyList: List<Any>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private var items: MutableList<CalendarData.Event> = mutableListOf()
@@ -74,6 +75,19 @@ class ListEventsAdapter(emptyList: List<Any>) :
         val title: TextView = itemView.findViewById(R.id.eventItemTitle)
         val date: TextView = itemView.findViewById(R.id.eventItemDate)
 
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val eventId =
+                        items[position].event_id //
+                    listener.onItemClick(eventId)
+                }
+            }
+        }
+    }
 
+    interface OnItemClickListener {
+        fun onItemClick(eventId: UUID)
     }
 }

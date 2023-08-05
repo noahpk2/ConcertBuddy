@@ -10,9 +10,12 @@
         android:label="RegisterFragment" />
 
     <fragment
-        android:id="@+id/eventViewFragment"
-        android:name="com.example.concertbuddy.events.ViewSingleEventFragment"
-        android:label="EventViewFragment" />
+        android:id="@+id/ViewSingleEventFragment"
+        android:name="com.example.concertbuddy.events.ViewSingleEventFragment">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileViewFragment"
@@ -30,10 +33,15 @@
         android:id="@+id/calendarFragment"
         android:name="com.example.concertbuddy.calendar.CalendarFragment"
         android:label="RegisterFragment" />
+
     <fragment
         android:id="@+id/ViewListEventsFragment"
-        android:name="com.example.concertbuddy.events.ViewListEventsFragment"
-        android:label="ViewListEventsFragment" />
+        android:name="com.example.concertbuddy.events.ViewListEventsFragment">
+        <action
+            android:id="@+id/action_ViewListEventsFragment_To_ViewSingleEventFragment"
+            app:destination="@id/ViewSingleEventFragment">
+        </action>
+    </fragment>
 
 
 
